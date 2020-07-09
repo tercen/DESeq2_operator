@@ -16,4 +16,3 @@ count_matrix <- all_data %>%
   pivot_wider(names_from = ".x", values_from = ".y") %>%
   select(-.ri)
 
-
