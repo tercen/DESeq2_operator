@@ -16,3 +16,14 @@ count_matrix <- all_data %>%
   pivot_wider(names_from = ".x", values_from = ".y") %>%
   select(-.ri)
 
+colData <- select(all_data,
+                  .x, condition = js0.condition) %>%
+  unique()
+
+dds <- DESeqDataSetFromMatrix(countData = count_matrix,
+                              colData = colData,
+                              design = ~ condition)
+
+dds <- DESeq(dds)
+
+dds_results <- results(dds)
