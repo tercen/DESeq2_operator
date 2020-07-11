@@ -2,8 +2,20 @@ library(tercen)
 library(tidyverse)
 library(DESeq2)
 
-all_data <- (ctx = tercenCtx())  %>% 
-  select(.x, .y, .ci, .ri, js0.condition)
+ctx = tercenCtx()
+
+if(inherits(try(ctx$select(".x")), 'try-error')) stop("x axis is missing.")
+if(inherits(try(ctx$select(".y")), 'try-error')) stop("y axis is missing.")
+if(inherits(try(ctx$select(".colorLevels")), 'try-error')) stop("color information is missing.")
+
+alpha <- as.logical(ctx$op.value('alpha'))
+LFC_shrinkage <- as.logical(ctx$op.value('LFC_shrinkage'))
+shrinkage_type <- as.logical(ctx$op.value('shrinkage_type'))
+
+
+all_data <- ctx  %>% 
+  select(.x, .y, .ci, .ri,
+         js0.condition, .colorLevels)
 
 count_matrix <- all_data %>%
   select(.ri, .x, .y) %>%
@@ -16,7 +28,7 @@ count_matrix <- count_matrix %>%
   select(-.ri)
 
 colData <- select(all_data,
-                  .x, condition = js0.condition) %>%
+                  .x, condition = .colorLevels) %>%
   unique()
 
 dds <- DESeqDataSetFromMatrix(countData = count_matrix,
@@ -25,7 +37,13 @@ dds <- DESeqDataSetFromMatrix(countData = count_matrix,
 
 dds <- DESeq(dds)
 
-dds_results <- results(dds)
+dds_results <- results(dds, alpha = alpha)
+
+if(LFC_shrinkage) {
+  dds_results <- lfcShrink(dds, type=shrinkage_type,
+                           res = dds_results,
+                           coef = "condition")
+}
 
 dds_results <- tibble(row_indexes, as_tibble(dds_results))
 
