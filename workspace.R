@@ -1,6 +1,8 @@
 library(tercen)
 library(tidyverse)
 library(DESeq2)
+library(ashr)
+library(apeglm)
 
 options("tercen.workflowId" = "0c98153037f24682e45289f1760072cb")
 options("tercen.stepId"     = "8bf22ba4-978e-4f33-b26c-34ae548f1737")

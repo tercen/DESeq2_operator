@@ -1,6 +1,8 @@
 library(tercen)
 library(tidyverse)
 library(DESeq2)
+library(ashr)
+library(apeglm)
 
 ctx = tercenCtx()
 
