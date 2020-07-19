@@ -14,18 +14,17 @@ if(inherits(try(ctx$select(".x")), 'try-error')) stop("x axis is missing.")
 if(inherits(try(ctx$select(".y")), 'try-error')) stop("y axis is missing.")
 if(inherits(try(ctx$select(".colorLevels")), 'try-error')) stop("color information is missing.")
 
-alpha <- as.logical(ctx$op.value('alpha'))
+alpha <- as.double(ctx$op.value('alpha'))
 LFC_shrinkage <- as.logical(ctx$op.value('LFC_shrinkage'))
-shrinkage_type <- as.logical(ctx$op.value('shrinkage_type'))
-
+shrinkage_type <- as.character(ctx$op.value('shrinkage_type'))
 
 all_data <- ctx  %>% 
   select(.x, .y, .ci, .ri,
-         js0.condition, .colorLevels)
+         .colorLevels)
 
 count_matrix <- all_data %>%
   select(.ri, .x, .y) %>%
-  pivot_wider(names_from = ".x", values_from = ".y")
+  spread(key = ".x", value = ".y")
 
 row_indexes <- count_matrix %>%
   select(.ri)
