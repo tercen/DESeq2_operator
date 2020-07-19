@@ -19,7 +19,7 @@ all_data <- ctx  %>%
 
 count_matrix <- all_data %>%
   select(.ri, .x, .y) %>%
-  pivot_wider(names_from = ".x", values_from = ".y")
+  spread(key = ".x", value = ".y")
 
 row_indexes <- count_matrix %>%
   select(.ri)
