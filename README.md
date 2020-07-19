@@ -10,6 +10,7 @@
 | ---------------- | -------------------------------- |
 | `color`          | Represents the groups to compare |
 | `y-axis`         | Sequence counts                  |
+| `x-axis`         | Sample name/identifier           |
 
 | Input parameters | Description                                                                              |
 | -----------------| ---------------------------------------------------------------------------------------- |
