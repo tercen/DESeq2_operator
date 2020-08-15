@@ -19,12 +19,13 @@
 | `LFC_shrinkage`  | Logical, whether the returned log fold-change values should be shrinked (default = TRUE) |
 | `shrinkage_type` | "normal", "apeglm" or "ashr", Type of shrinkage estimator to use (default = "normal")    |
 
-| Output relations | Description                                                               |
-| ---------------- | ------------------------------------------------------------------------- |
-| `pvalue`         | numeric, p-value calculated per gene                                      |
-| `padj`           | numeric, p-value calculated per gene after adjusting for multiple testing |
-| `baseMean`       | numeric, mean of normalized counts for all the samples                    |
-| `log2FoldChange` | numeric, shrunken log2 fold-change between the two groups to compare      |
+|  Output relations  | Description                                                                |
+| ------------------ | -------------------------------------------------------------------------- |
+| `pvalue`           | numeric, p-value calculated per gene                                       |
+| `padj`             | numeric, p-value calculated per gene after adjusting for multiple testing  |
+| `baseMean`         | numeric, mean of normalized counts for all the samples                     |
+| `log2FoldChange`   | numeric, shrunken log2 fold-change between the two groups to compare       |
+| `minus_log10_padj` | numeric, negative log10 transformation of padj for more intuitive plotting |
 
 ## Details
 

@@ -41,7 +41,8 @@ if(LFC_shrinkage) dds_results <- lfcShrink(dds, type=shrinkage_type,
                                            coef = "condition")
 
 dds_results <- tibble(filter(all_data, .ci == 0) %>% select(.ri),
-                      as_tibble(dds_results))
+                      as_tibble(dds_results) %>%
+                        mutate(minus_log10_padj = -log10(padj)))
 
 ctx$addNamespace(dds_results) %>%
   ctx$save()
