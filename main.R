@@ -6,32 +6,21 @@ library(apeglm)
 
 ctx = tercenCtx()
 
-if(inherits(try(ctx$select(".x")), 'try-error')) stop("x axis is missing.")
-if(inherits(try(ctx$select(".y")), 'try-error')) stop("y axis is missing.")
-if(inherits(try(ctx$select(".colorLevels")), 'try-error')) stop("color information is missing.")
+if(length(ctx$yAxis) == 0) stop("y axis is missing.")
+if(length(ctx$rnames) == 0) stop("row information is missing.")
+if(length(ctx$cnames) == 0) stop("column information is missing.")
+if(length(ctx$colors) == 0) stop("color information is missing.")
 
 alpha <- as.double(ctx$op.value('alpha'))
 LFC_shrinkage <- as.logical(ctx$op.value('LFC_shrinkage'))
 shrinkage_type <- as.character(ctx$op.value('shrinkage_type'))
 
+all_data <- ctx %>% select(.ci, .ri,.colorLevels)
 
-all_data <- ctx  %>% 
-  select(.x, .y, .ci, .ri,
-         .colorLevels)
+count_matrix <- ctx$as.matrix()
 
-count_matrix <- all_data %>%
-  select(.ri, .x, .y) %>%
-  spread(key = ".x", value = ".y")
-
-row_indexes <- count_matrix %>%
-  select(.ri)
-
-count_matrix <- count_matrix %>%
-  select(-.ri)
-
-colData <- select(all_data,
-                  .x, condition = .colorLevels) %>%
-  unique()
+colData <- filter(all_data, .ri == 0) %>%
+  select(.ci, condition = .colorLevels)
 
 dds <- DESeqDataSetFromMatrix(countData = count_matrix,
                               colData = colData,
@@ -41,13 +30,12 @@ dds <- DESeq(dds)
 
 dds_results <- results(dds, alpha = alpha)
 
-if(LFC_shrinkage) {
-  dds_results <- lfcShrink(dds, type=shrinkage_type,
-                           res = dds_results,
-                           coef = "condition")
-}
+if(LFC_shrinkage) dds_results <- lfcShrink(dds, type=shrinkage_type,
+                                           res = dds_results,
+                                           coef = "condition")
 
-dds_results <- tibble(row_indexes, as_tibble(dds_results))
+dds_results <- tibble(filter(all_data, .ci == 0) %>% select(.ri),
+                      as_tibble(dds_results))
 
 ctx$addNamespace(dds_results) %>%
   ctx$save()
