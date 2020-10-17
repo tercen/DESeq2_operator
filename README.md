@@ -1,10 +1,10 @@
 # DESeq2_two_conditions operator
 
-## Description
+##### Description
 
 `DESeq2_two_conditions` tests for differential gene expression in samples from two conditions using the `DESeq2` package from BioConductor (Love, et al, Genome Biology, 2014).
 
-## Usage
+##### Usage
 
 | Input projection | Description                      |
 | ---------------- | -------------------------------- |
@@ -27,11 +27,11 @@
 | `log2FoldChange`   | numeric, shrunken log2 fold-change between the two groups to compare       |
 | `minus_log10_padj` | numeric, negative log10 transformation of padj for more intuitive plotting |
 
-## Details
+##### Details
 
 The operator uses the `DESeq2` package from BioConductor.
 
-## References
+##### References
 
 Love MI, Huber W, Anders S (2014). “Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2.” Genome Biology, 15, 550. doi: 10.1186/s13059-014-0550-8.
 
