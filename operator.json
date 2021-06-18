@@ -1,6 +1,6 @@
 {
-  "name": "DESeq2_two_conditions",
-  "description": "DESeq2 two condition comparison",
+  "name": "DESeq2",
+  "description": "RNA sequencing alglorithm. Performs an internal normalization for each gene across all samples. Can calculate across two experimental factors. Outliers are removed using Cook's distance.",
   "tags": ["RNA-seq", "differential expression", "genomics"],
   "authors": ["tercen"],
   "urls": ["https://github.com/tercen/DESeq2_two_conditions_operator"],
