@@ -3,6 +3,9 @@ library(tidyverse)
 library(DESeq2)
 library(ashr)
 library(apeglm)
+library(reshape2)
+
+library(tim)
 
 options("tercen.workflowId" = "581ff0ca91a059dff254ff6579007bbd")
 options("tercen.stepId"     = "e984055c-47ca-4560-b54a-cbb930c24a87")
@@ -57,5 +60,4 @@ res_out<-res_out_tmp %>%
 res_out %>%
   ctx$save()
 
-
-tim::build_test_data(res_table = res_out, ctx = ctx, test_name = "test1")
+tim::build_test_data(res_table = res_out, ctx = ctx, test_name = "test1",gen_schema=TRUE)
