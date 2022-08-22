@@ -4,8 +4,8 @@ library(DESeq2)
 library(ashr)
 library(apeglm)
 
-options("tercen.workflowId" = "0c98153037f24682e45289f1760072cb")
-options("tercen.stepId"     = "6c765e2e-417a-4223-9122-05624c8d6e89")
+options("tercen.workflowId" = "581ff0ca91a059dff254ff6579007bbd")
+options("tercen.stepId"     = "e984055c-47ca-4560-b54a-cbb930c24a87")
 
 getOption("tercen.workflowId")
 getOption("tercen.stepId")
@@ -21,12 +21,19 @@ alpha <- as.double(ctx$op.value('alpha'))
 LFC_shrinkage <- as.logical(ctx$op.value('LFC_shrinkage'))
 shrinkage_type <- as.character(ctx$op.value('shrinkage_type'))
 
-all_data <- ctx %>% select(.ci, .ri,.colorLevels)
+alpha <- 0.1
+LFC_shrinkage <- FALSE
+shrinkage_type <- "local"
 
-count_matrix <- ctx$as.matrix()
+
+all_data <- ctx %>% select(.ci, .ri,.colorLevels, .y)
+
+count_matrix <- acast(all_data, .ri~.ci, value.var=".y")
 
 colData <- filter(all_data, .ri == 0) %>%
   select(.ci, condition = .colorLevels)
+
+colData$condition<-factor(colData$condition)
 
 dds <- DESeqDataSetFromMatrix(countData = count_matrix,
                               colData = colData,
@@ -40,9 +47,15 @@ if(LFC_shrinkage) dds_results <- lfcShrink(dds, type=shrinkage_type,
                                            res = dds_results,
                                            coef = "condition")
 
-dds_results <- tibble(filter(all_data, .ci == 0) %>% select(.ri),
+res_out_tmp <- tibble(filter(all_data, .ci == 0) %>% select(.ri),
                       as_tibble(dds_results) %>%
-                        mutate(minus_log10_padj = -log10(padj)))
+                      mutate(minus_log10_padj = -log10(padj)))
+                     
+res_out<-res_out_tmp %>%
+  ctx$addNamespace()
 
-ctx$addNamespace(dds_results) %>%
+res_out %>%
   ctx$save()
+
+
+tim::build_test_data(res_table = res_out, ctx = ctx, test_name = "test1")
