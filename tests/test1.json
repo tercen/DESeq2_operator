@@ -14,6 +14,23 @@
   "labels": [],
   "yAxis": "y_values",
   "xAxis": "",
-  "generatedOn": "08/22/2022 01:33:58 PM 2022",
+  "propertyValues": [
+    {
+    "kind": "PropertyValue",
+    "name": "alpha",
+    "value": "0.1"
+    },
+    {
+    "kind": "PropertyValue",
+    "name": "LFC_shrinkage",
+    "value": "FALSE"
+    },
+    {
+    "kind": "PropertyValue",
+    "name": "shrinkage_type",
+    "value": "local"
+  }
+  ],
+  "generatedOn": "08/22/2022 01:43:49 PM 2022",
   "version": ""
 }
