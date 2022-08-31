@@ -1,8 +1,8 @@
-# DESeq2_two_conditions operator
+# DESeq2
 
 ##### Description
 
-`DESeq2_two_conditions` tests for differential gene expression in samples from two conditions using the `DESeq2` package from BioConductor (Love, et al, Genome Biology, 2014).
+The `DESeq2` operator tests for differential gene expression in samples from two conditions using the `DESeq2` package from BioConductor (Love, et al, Genome Biology, 2014).
 
 ##### Usage
 
