@@ -16,6 +16,7 @@ if(length(ctx$colors) == 0) stop("color information is missing.")
 alpha <- ctx$op.value('alpha', as.double, 0.1)
 LFC_shrinkage <- ctx$op.value('LFC_shrinkage', as.logical, TRUE)
 shrinkage_type <- ctx$op.value('shrinkage_type', as.character, "apeglm")
+size_factor_type <- ctx$op.value('size_factor_type', as.character, "ratio")
 
 all_data <- ctx$select(c(".ci", ".ri", ".y", ctx$colors[[1]]))
 
@@ -31,7 +32,7 @@ dds <- DESeqDataSetFromMatrix(
   design = ~ condition
 )
 
-dds <- DESeq(dds)
+dds <- DESeq(dds, sfType = size_factor_type)
 
 effects <- resultsNames(dds)
 effects <- effects[!effects %in% "Intercept"]

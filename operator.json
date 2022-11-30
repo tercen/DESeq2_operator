@@ -27,6 +27,17 @@
       "ashr"
     ],
     "description": "Type of shrinkage estimator to use."
+  },
+    {
+    "kind": "EnumeratedProperty",
+    "name": "size_factor_type",
+    "defaultValue": "ratio",
+    "values": [
+      "ratio",
+      "poscounts",
+      "iterate"
+    ],
+    "description": "Method used to estimate size factors. See operator README for details."
   }
   ]
 }
