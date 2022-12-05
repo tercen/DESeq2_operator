@@ -1,10 +1,12 @@
-library(tercen)
-library(tercenApi)
-library(dplyr)
-library(DESeq2)
-library(ashr)
-library(apeglm)
-library(reshape2)
+suppressPackageStartupMessages({
+  library(tercen)
+  library(tercenApi)
+  library(dplyr)
+  library(DESeq2)
+  library(ashr)
+  library(apeglm)
+  library(reshape2)
+})
 
 ctx = tercenCtx()
 
@@ -20,11 +22,20 @@ size_factor_type <- ctx$op.value('size_factor_type', as.character, "ratio")
 
 all_data <- ctx$select(c(".ci", ".ri", ".y", ctx$colors[[1]]))
 
-count_matrix <- acast(all_data, .ri ~ .ci, value.var = ".y")
+dups <- all_data %>% select(.ci, .ri) %>% duplicated %>% any
+stopifnot("Some cells contain multiple values." = !dups)
+
+count_matrix <- acast(
+  all_data,
+  .ri ~ .ci,
+  value.var = ".y",
+  fun.aggregate = mean
+)
 
 colData <- filter(all_data, .ri == 0) %>%
   select(.ci, condition = !!ctx$colors[[1]]) %>%
-  mutate(condition = factor(condition))
+  mutate(condition = factor(condition)) %>%
+  unique()
 
 dds <- DESeqDataSetFromMatrix(
   countData = count_matrix,
