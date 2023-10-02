@@ -21,7 +21,7 @@ shrinkage_type <- ctx$op.value('shrinkage_type', as.character, "apeglm")
 size_factor_type <- ctx$op.value('size_factor_type', as.character, "ratio")
 reference.index <- ctx$op.value("reference.index", as.double, 1)
 
-all_data <- ctx$select(c(".ci", ".ri", ".y", ctx$colors[[1]]))
+all_data <- ctx$select(c(".ci", ".ri", ".y", ctx$colors))
 
 dups <- all_data %>% select(.ci, .ri) %>% duplicated %>% any
 stopifnot("Some cells contain multiple values." = !dups)
@@ -56,8 +56,9 @@ dds <- DESeq(dds, sfType = size_factor_type, quiet = TRUE)
 
 effects <- resultsNames(dds)
 effects <- effects[!effects %in% "Intercept"]
-res <- sapply(effects, function(x) {
-  
+
+res <- list()
+for(x in effects) {
   dds_results <- results(dds, alpha = alpha, name = x)
   
   if(LFC_shrinkage) {
@@ -72,9 +73,9 @@ res <- sapply(effects, function(x) {
   
   dds_results$comparison <- x
   dds_results$.ri <- as.integer(rownames(dds_results))
-  dds_results
+  res[[x]] <- dds_results
   
-})
+}
 
 res_out <- do.call(rbind, res) %>%
   as_tibble() %>%
