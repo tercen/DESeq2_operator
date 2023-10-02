@@ -38,6 +38,12 @@
       "iterate"
     ],
     "description": "Method used to estimate size factors. See operator README for details."
+  },
+    {
+    "kind": "DoubleProperty",
+    "name": "reference.index",
+    "defaultValue": 1,
+    "description": "Index of the reference category to be used."
   }
   ]
 }

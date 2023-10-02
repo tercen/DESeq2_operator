@@ -19,6 +19,7 @@ alpha <- ctx$op.value('alpha', as.double, 0.1)
 LFC_shrinkage <- ctx$op.value('LFC_shrinkage', as.logical, TRUE)
 shrinkage_type <- ctx$op.value('shrinkage_type', as.character, "apeglm")
 size_factor_type <- ctx$op.value('size_factor_type', as.character, "ratio")
+reference.index <- ctx$op.value("reference.index", as.double, 1)
 
 all_data <- ctx$select(c(".ci", ".ri", ".y", ctx$colors[[1]]))
 
@@ -32,10 +33,18 @@ count_matrix <- acast(
   fun.aggregate = mean
 )
 
-colData <- filter(all_data, .ri == 0) %>%
-  select(.ci, condition = !!ctx$colors[[1]]) %>%
-  mutate(condition = factor(condition)) %>%
-  unique()
+df_tmp <- filter(all_data, .ri == 0) %>%
+  tidyr::unite(col = "condition", unlist(ctx$colors)) %>%
+  select(.ci, condition)
+
+# Reorder factors
+lev <- unique(df_tmp$condition)
+lev_idx <- c(seq_along(lev)[reference.index], seq_along(lev)[-reference.index]) 
+df_tmp$condition <- factor(
+  df_tmp$condition, levels = lev[lev_idx]
+)
+
+colData <- df_tmp %>% unique()
 
 dds <- DESeqDataSetFromMatrix(
   countData = count_matrix,
