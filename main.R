@@ -52,7 +52,7 @@ dds <- DESeqDataSetFromMatrix(
   design = ~ condition
 )
 
-dds <- DESeq(dds, sfType = size_factor_type)
+dds <- DESeq(dds, sfType = size_factor_type, quiet = TRUE)
 
 effects <- resultsNames(dds)
 effects <- effects[!effects %in% "Intercept"]
@@ -65,7 +65,8 @@ res <- sapply(effects, function(x) {
       dds,
       type = shrinkage_type,
       res = dds_results,
-      coef = x
+      coef = x,
+      quiet = TRUE
     )
   }
   
