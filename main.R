@@ -21,7 +21,7 @@ shrinkage_type <- ctx$op.value('shrinkage_type', as.character, "apeglm")
 size_factor_type <- ctx$op.value('size_factor_type', as.character, "ratio")
 reference.index <- ctx$op.value("reference.index", as.double, 1)
 
-all_data <- ctx$select(c(".ci", ".ri", ".y", ctx$colors))
+all_data <- ctx$select(c(".ci", ".ri", ".y", ".colorLevels", ctx$colors))
 
 dups <- all_data %>% select(.ci, .ri) %>% duplicated %>% any
 stopifnot("Some cells contain multiple values." = !dups)
@@ -34,6 +34,7 @@ count_matrix <- acast(
 )
 
 df_tmp <- filter(all_data, .ri == 0) %>%
+  arrange(.colorLevels) %>%
   tidyr::unite(col = "condition", unlist(ctx$colors)) %>%
   select(.ci, condition)
 
