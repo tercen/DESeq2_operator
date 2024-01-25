@@ -1,9 +1,17 @@
 {
   "name": "DESeq2",
   "description": "Differential expression analysis for RNA-seq data.",
-  "tags": ["RNA-seq", "differential expression", "omics"],
-  "authors": ["tercen"],
-  "urls": ["https://github.com/tercen/DESeq2_operator"],
+  "tags": [
+    "RNA-seq",
+    "omics",
+    "statistical testing"
+  ],
+  "authors": [
+    "tercen"
+  ],
+  "urls": [
+    "https://github.com/tercen/DESeq2_operator"
+  ],
   "properties": [
     {
       "kind": "DoubleProperty",
@@ -18,32 +26,32 @@
       "description": "A logical variable indicating whether the returned log fold-change values should be shrinked."
     },
     {
-    "kind": "EnumeratedProperty",
-    "name": "shrinkage_type",
-    "defaultValue": "apeglm",
-    "values": [
-      "normal",
-      "apeglm",
-      "ashr"
-    ],
-    "description": "Type of shrinkage estimator to use."
-  },
+      "kind": "EnumeratedProperty",
+      "name": "shrinkage_type",
+      "defaultValue": "apeglm",
+      "values": [
+        "normal",
+        "apeglm",
+        "ashr"
+      ],
+      "description": "Type of shrinkage estimator to use."
+    },
     {
-    "kind": "EnumeratedProperty",
-    "name": "size_factor_type",
-    "defaultValue": "ratio",
-    "values": [
-      "ratio",
-      "poscounts",
-      "iterate"
-    ],
-    "description": "Method used to estimate size factors. See operator README for details."
-  },
+      "kind": "EnumeratedProperty",
+      "name": "size_factor_type",
+      "defaultValue": "ratio",
+      "values": [
+        "ratio",
+        "poscounts",
+        "iterate"
+      ],
+      "description": "Method used to estimate size factors. See operator README for details."
+    },
     {
-    "kind": "DoubleProperty",
-    "name": "reference.index",
-    "defaultValue": 1,
-    "description": "Index of the reference category to be used."
-  }
+      "kind": "DoubleProperty",
+      "name": "reference.index",
+      "defaultValue": 1,
+      "description": "Index of the reference category to be used."
+    }
   ]
 }
