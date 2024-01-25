@@ -1,6 +1,6 @@
 {
   "name": "DESeq2",
-  "description": "Differential expression analysis for RNA-seq data.",
+  "description": "Performs a differential expression analysis of RNA sequencing data.",
   "tags": [
     "RNA-seq",
     "omics",
