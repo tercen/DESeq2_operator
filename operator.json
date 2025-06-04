@@ -17,24 +17,24 @@
       "kind": "DoubleProperty",
       "name": "alpha",
       "defaultValue": 0.1,
-      "description": "Adjusted _p value_ cutoff for independent filtering"
+      "description": "Adjusted p-value cutoff for independent filtering"
     },
     {
       "kind": "BooleanProperty",
       "name": "LFC_shrinkage",
       "defaultValue": true,
-      "description": "A logical variable indicating whether the returned log fold-change values should be shrinked."
+      "description": "Whether the returned log fold-change values should be shrinked"
     },
     {
       "kind": "EnumeratedProperty",
       "name": "shrinkage_type",
-      "defaultValue": "apeglm",
+      "defaultValue": "normal",
       "values": [
         "normal",
         "apeglm",
         "ashr"
       ],
-      "description": "Type of shrinkage estimator to use."
+      "description": "Type of shrinkage estimator to use"
     },
     {
       "kind": "EnumeratedProperty",
@@ -45,13 +45,72 @@
         "poscounts",
         "iterate"
       ],
-      "description": "Method used to estimate size factors. See operator README for details."
+      "description": "Method for size factor estimation"
     },
     {
       "kind": "DoubleProperty",
       "name": "reference.index",
       "defaultValue": 1,
-      "description": "Index of the reference category to be used."
+      "description": "Index of the reference category to be used"
     }
-  ]
+  ],
+  "operatorSpec": {
+    "kind": "OperatorSpec",
+    "ontologyUri": "https://tercen.com/_ontology/tercen",
+    "ontologyVersion": "0.0.1",
+    "inputSpecs": [
+      {
+        "kind": "CrosstabSpec",
+        "metaFactors": [
+          {
+            "kind": "MetaFactor",
+            "name": "Gene",
+            "type": "",
+            "description": "Gene name/identifier",
+            "ontologyMapping": "variable",
+            "crosstabMapping": "row",
+            "cardinality": "1..n",
+            "factors": []
+          },
+          {
+            "kind": "MetaFactor",
+            "name": "Sample",
+            "type": "",
+            "description": "Sample name/identifier",
+            "ontologyMapping": "observation",
+            "crosstabMapping": "column",
+            "cardinality": "1..n",
+            "factors": []
+          },
+          {
+            "kind": "MetaFactor",
+            "name": "Groups",
+            "type": "",
+            "description": "Represents the groups to compare",
+            "ontologyMapping": "color",
+            "crosstabMapping": "column",
+            "cardinality": "1..n",
+            "factors": []
+          }
+        ],
+        "axis": [
+          {
+            "kind": "AxisSpec",
+            "metaFactors": [
+              {
+                "kind": "MetaFactor",
+                "name": "Sequence counts",
+                "type": "numeric",
+                "description": "Sequence counts",
+                "ontologyMapping": "measurement",
+                "crosstabMapping": "y",
+                "cardinality": "1",
+                "factors": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
