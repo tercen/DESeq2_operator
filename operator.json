@@ -81,16 +81,6 @@
             "crosstabMapping": "column",
             "cardinality": "1..n",
             "factors": []
-          },
-          {
-            "kind": "MetaFactor",
-            "name": "Groups",
-            "type": "",
-            "description": "Represents the groups to compare",
-            "ontologyMapping": "color",
-            "crosstabMapping": "column",
-            "cardinality": "1..n",
-            "factors": []
           }
         ],
         "axis": [
@@ -105,6 +95,16 @@
                 "ontologyMapping": "measurement",
                 "crosstabMapping": "y",
                 "cardinality": "1",
+                "factors": []
+              },
+              {
+                "kind": "MetaFactor",
+                "name": "Groups",
+                "type": "",
+                "description": "Represents the groups (conditions) to compare",
+                "ontologyMapping": "condition",
+                "crosstabMapping": "column",
+                "cardinality": "1..n",
                 "factors": []
               }
             ]
