@@ -28,7 +28,7 @@
     {
       "kind": "EnumeratedProperty",
       "name": "shrinkage_type",
-      "defaultValue": "normal",
+      "defaultValue": "apeglm",
       "values": [
         "normal",
         "apeglm",
