@@ -103,7 +103,7 @@
                 "type": "",
                 "description": "Represents the groups (conditions) to compare",
                 "ontologyMapping": "condition",
-                "crosstabMapping": "column",
+                "crosstabMapping": "color",
                 "cardinality": "1..n",
                 "factors": []
               }
