@@ -90,7 +90,7 @@
               {
                 "kind": "MetaFactor",
                 "name": "Sequence counts",
-                "type": "numeric",
+                "type": "double",
                 "description": "Sequence counts",
                 "ontologyMapping": "measurement",
                 "crosstabMapping": "y",
